@@ -4,9 +4,8 @@ import torch
 
 class BertEmbedding:
 
-    def __init__(self) -> None:
+    def __init__(self, model_name: str = "bert-base-uncased") -> None:
         super().__init__()
-        model_name = "bert-base-uncased"  # You can choose a different BERT model if needed
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.model = BertModel.from_pretrained(model_name)
 
@@ -15,7 +14,7 @@ class BertEmbedding:
         with torch.no_grad():
             outputs = self.model(**tokens)
         embedding = outputs.last_hidden_state[0].mean(dim=0).numpy()
-        print(embedding)
+        return embedding
 
 
 if __name__ == "__main__":
