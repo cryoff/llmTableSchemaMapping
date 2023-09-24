@@ -6,6 +6,19 @@ Naive pipeline to conduct the task is:
 - get some (probably not the best one) alignment between columns of the template table and source table
 - investigate the data format of source table column and create a function (using LLM) to transform the data to the format of template table column
 
+## Usage
+Install dependencies (pip is used for simplicity)
+```shell
+python3.X -m venv venv_llm_table
+source venv_llm_table/bin/activate
+pip install -r requirements.txt
+```
+
+Go to `src` folder and run
+```shell
+python3 convert_table.py --source <source CSV> --template <template CSV> --target <target CSV>
+```
+
 ### Column(s) alignment
 
 - we don't make assumptions on the number of columns, we find some good alignment
@@ -15,6 +28,9 @@ Naive pipeline to conduct the task is:
 ### Limitations
 
 - the data transformation is only done for numeric and date-like columns
+- code "execution" is very naive and error-prone
+- agents that force the LLM to produce a reasonable code in a while-true fashion are not implemented
+- the prompt for code generation can be waaaaay better
 
 ### Corner cases and possible problems
 
