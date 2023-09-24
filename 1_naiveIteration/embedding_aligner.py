@@ -30,10 +30,8 @@ class EmbeddingBasedAligner:
         self.embedder: BertEmbedding = BertEmbedding("ramybaly/ner_nerd_fine")
 
     def _get_cluster_centroid(self, sample: DataFrame):
-        # convert each row to string
+        # convert each row to string -> get embeddings -> compute centroid
         sample = sample.astype(str)
-        # apply function "fun" to each row and save the result in a new column
-        # sample["embedding"] = sample.iloc[:, 0].apply(lambda x: self.embedder.get_embedding(x))
         embedding_vectors = sample.apply(self.embedder.get_embedding)
         centroid = np.mean(embedding_vectors)
         return centroid
