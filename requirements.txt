@@ -1,0 +1,7 @@
+pandas==1.5.3
+scipy==1.11.2
+torch==2.0.1
+transformers==4.33.2
+openai==0.27.10
+guardrails-ai==0.2.3
+langchain==0.0.300
