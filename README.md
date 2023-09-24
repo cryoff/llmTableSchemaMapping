@@ -44,6 +44,7 @@ python3 convert_table.py --source <source CSV> --template <template CSV> --targe
     It could be the moments of the lengths of the strings (mean, variance), the number of unique values, etc.
 
 ### TODO
+- TESTS!!!
 - proper deployment (at least containerization)
 - graphana observability
 - proper logging
