@@ -73,9 +73,6 @@ class EmbeddingBasedAligner:
             print("No alignment found")
 
     def process(self):
-        if len(self.template_df.columns) < len(self.source_df.columns):
-            raise ValueError("Number of columns in template is smaller than in source")
-
         template_map: dict[str, np.ndarray] = self._compute_column_to_embedding_map(self.template_df)
         source_map: dict[str, np.ndarray] = self._compute_column_to_embedding_map(self.source_df)
         self._get_alignment(template_map, source_map)
