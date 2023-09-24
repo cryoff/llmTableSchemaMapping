@@ -49,7 +49,8 @@ class EmbeddingBasedAligner:
 
         return col_to_centroid
 
-    def _get_alignment(self, template_map: dict[str, np.ndarray], source_map: dict[str, np.ndarray]):
+    @classmethod
+    def _get_alignment(cls, template_map: dict[str, np.ndarray], source_map: dict[str, np.ndarray]) -> dict[str, str]:
         # Calculate cosine similarity between all pairs of vectors and create a similarity matrix
         similarity_matrix = np.zeros((len(template_map), len(source_map)))
         keys_dict1 = list(template_map.keys())
@@ -63,17 +64,20 @@ class EmbeddingBasedAligner:
         # Hungarian algo for alignment
         try:
             row_ind, col_ind = linear_sum_assignment(-similarity_matrix)
-            alignment_mapping = {}
+            alignment_mapping: dict[str, str] = {}
             for i, j in zip(row_ind, col_ind):
                 alignment_mapping[keys_dict1[i]] = keys_dict2[j]
             # print(alignment_mapping)
         except ValueError:
             print("No alignment found")
 
-    def process(self):
+        return alignment_mapping
+
+    def get_alignment(self) -> dict[str, str]:
         template_map: dict[str, np.ndarray] = self._compute_column_to_embedding_map(self.template_df)
         source_map: dict[str, np.ndarray] = self._compute_column_to_embedding_map(self.source_df)
-        self._get_alignment(template_map, source_map)
+        alignment_mapping: dict[str, str] = self._get_alignment(template_map, source_map)
+        return alignment_mapping
 
 
 if __name__ == "__main__":
@@ -82,4 +86,5 @@ if __name__ == "__main__":
     source_csv_path: str = "/home/users/andreya1/Documents/PERSONAL/llmTestTask/llmTableSchemaMapping/task/table_B.csv"
     dest_pdf_path: str = "path_to_dest_pdf"
     naive_iteration: EmbeddingBasedAligner = EmbeddingBasedAligner(template_csv_path, source_csv_path, dest_pdf_path)
-    naive_iteration.process()
+    alignment_mapping: dict[str, str] = naive_iteration.get_alignment()
+    print(alignment_mapping)
