@@ -18,6 +18,7 @@ class DataCategorizer:
             validators=[ValidChoices(choices=data_types, on_fail='reask')],
             description="Yes-no question",
             prompt=f"Which data type describes the slice of data better?"
+                   f"Please note that if string contain any letters (together with numbers) it is not numeric."
                    f"Data sample: ```{data}```"
                    f"Please find the best data type from the following list: {data_types}",
             num_reasks=10
@@ -33,7 +34,7 @@ class DataCategorizer:
         col_2_type: dict[str, str] = {}
         for col in df.columns:
             sub_sample: Series = df[col]
-            data: str = str(sub_sample.astype(str))
+            data: str = sub_sample.to_string(index=False)
             data_type: str = DataCategorizer.get_data_category(data)
             # print(f"{col}->{data_type}")
             col_2_type[col] = data_type
