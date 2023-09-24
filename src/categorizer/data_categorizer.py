@@ -1,17 +1,15 @@
 import openai
 from guardrails import Guard
 from guardrails.validators import ValidChoices
-from rich import print
+from pandas import DataFrame, Series
+
+from const.constants import DATE_CATEGORY, NUMBER_CATEGORY, TEXT_CATEGORY
 
 
 class DataCategorizer:
-    DATE_CATEGORY: str = "date"
-    NUMBER_CATEGORY: str = "number"
-    TEXT_CATEGORY: str = "text"
-
-    @classmethod
-    def get_data_category(cls, data):
-        data_types: list[str] = [cls.DATE_CATEGORY, cls.NUMBER_CATEGORY, cls.TEXT_CATEGORY]
+    @staticmethod
+    def get_data_category(data: str):
+        data_types: list[str] = [DATE_CATEGORY, NUMBER_CATEGORY, TEXT_CATEGORY]
 
         # capitalize the first letter for each word in data_types
         data_types.extend([data_type.capitalize() for data_type in data_types])
@@ -26,8 +24,21 @@ class DataCategorizer:
         )
 
         raw_llm_output, validated_llm_response = guard(openai.Completion.create)
-        print(validated_llm_response.lower())
-        print(guard.state.most_recent_call.tree)
+        # print(validated_llm_response.lower())
+        # print(guard.state.most_recent_call.tree)
+        return validated_llm_response.lower()
+
+    @staticmethod
+    def get_data_categories(df: DataFrame) -> dict[str, str]:
+        col_2_type: dict[str, str] = {}
+        for col in df.columns:
+            sub_sample: Series = df[col]
+            data: str = str(sub_sample.astype(str))
+            data_type: str = DataCategorizer.get_data_category(data)
+            # print(f"{col}->{data_type}")
+            col_2_type[col] = data_type
+
+        return col_2_type
 
 
 if __name__ == "__main__":
