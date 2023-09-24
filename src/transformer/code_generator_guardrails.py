@@ -1,12 +1,12 @@
-from pydantic import BaseModel, Field
-from guardrails.validators import BugFreePython
-from guardrails.datatypes import PythonCode
 import guardrails as gd
 import openai
-
+from guardrails.datatypes import PythonCode
+from guardrails.validators import BugFreePython
+from pydantic import BaseModel, Field
 from rich import print
 
 
+# deprecated
 class BugFreePythonCode(BaseModel):
     python_code: PythonCode = Field(validators=[BugFreePython(on_fail="reask")])
 
@@ -14,6 +14,7 @@ class BugFreePythonCode(BaseModel):
         arbitrary_types_allowed = True
 
 
+# deprecated
 class CodeGeneratorGuardrails:
     prompt: str = """
     Given the following high level leetcode problem description, write a Python code snippet that solves the problem.
