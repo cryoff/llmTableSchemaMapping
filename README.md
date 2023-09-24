@@ -42,3 +42,9 @@ python3 convert_table.py --source <source CSV> --template <template CSV> --targe
 - Given multiple data-like columns or name-like columns, we may completely fail to get proper alignment.
     To do better here, we need to consider larger subsample of the data and use some statistics as "features".
     It could be the moments of the lengths of the strings (mean, variance), the number of unique values, etc.
+
+### TODO
+- proper deployment (at least containerization)
+- graphana observability
+- proper logging
+- cost checking
