@@ -14,7 +14,7 @@ class BugFreePythonCode(BaseModel):
         arbitrary_types_allowed = True
 
 
-class CodeGeneratingDataTransformer:
+class CodeGeneratorGuardrails:
     prompt: str = """
     Given the following high level leetcode problem description, write a Python code snippet that solves the problem.
 
@@ -26,7 +26,7 @@ class CodeGeneratingDataTransformer:
     guard = gd.Guard.from_pydantic(output_class=BugFreePythonCode, prompt=prompt)
 
     @classmethod
-    def generate_transformer(cls, template_data: str, source_data: str) -> str:
+    def generate_transformer_code(cls, template_data: str, source_data: str) -> str:
         leetcode_problem: str = f"""
         This is a template data:
         ```
@@ -41,13 +41,17 @@ class CodeGeneratingDataTransformer:
         Create a function called `transform` that takes a string as input and converts it to template data format.
         """
 
-        raw_llm_response, validated_response = cls.guard(
-            openai.Completion.create,
-            prompt_params={"leetcode_problem": leetcode_problem},
-            engine="text-davinci-003",
-            max_tokens=2048,
-            temperature=0,
-        )
+        try:
+            raw_llm_response, validated_response = cls.guard(
+                openai.Completion.create,
+                prompt_params={"leetcode_problem": leetcode_problem},
+                engine="text-davinci-003",
+                max_tokens=2048,
+                temperature=0,
+            )
+        except Exception as e:
+            print("Error in generating code using text-davinci-003")
+            return ""
 
         # print(validated_response["python_code"])
 
