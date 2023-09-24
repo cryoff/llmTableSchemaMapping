@@ -10,3 +10,13 @@ Naive pipeline to conduct the task is:
 
 - we don't make assumptions on the number of columns, we find some good alignment
 - for each column in the template table, we find the best alignment in the source table
+
+### Corner cases and possible problems
+
+- embedding-based alignment is using a subsample of the data (50 rows currently).
+    We can be just unlucky to select a non-representative subsample and get a bad alignment.
+- Getting the centroid of the embeddings is relatively simple method however some more involved clustering methods can be used.
+- The data modeling of the source table may be not good enough and we fail to get any relevant embedding clusters.
+- Given multiple data-like columns or name-like columns, we may completely fail to get proper alignment.
+    To do better here, we need to consider larger subsample of the data and use some statistics as "features".
+    It could be the moments of the lengths of the strings (mean, variance), the number of unique values, etc.
