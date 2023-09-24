@@ -1,7 +1,6 @@
 import numpy as np
 import torch
 from transformers import BertTokenizer, BertModel
-import diskcache as dc
 
 
 class BertEmbedding:
