@@ -10,9 +10,15 @@ Naive pipeline to conduct the task is:
 
 - we don't make assumptions on the number of columns, we find some good alignment
 - for each column in the template table, we find the best alignment in the source table
+- local BERT model is used however we can freely use OpenAI embeddings or any other model/provider
+
+### Limitations
+
+- the data transformation is only done for numeric and date-like columns
 
 ### Corner cases and possible problems
 
+- performance may heavily depend on the amount of sampled data 
 - embedding-based alignment is using a subsample of the data (50 rows currently).
     We can be just unlucky to select a non-representative subsample and get a bad alignment.
 - Getting the centroid of the embeddings is relatively simple method however some more involved clustering methods can be used.
