@@ -14,6 +14,11 @@ source venv_llm_table/bin/activate
 pip install -r requirements.txt
 ```
 
+Set OpenAI API key (it is used in the implementation)
+```shell
+export OPENAI_API_KEY=<KEY>
+```
+
 Go to `src` folder and run
 ```shell
 python3 convert_table.py --source <source CSV> --template <template CSV> --target <target CSV>
