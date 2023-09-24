@@ -1,12 +1,13 @@
 import numpy as np
 import torch
 from transformers import BertTokenizer, BertModel
+import diskcache as dc
 
 
 class BertEmbedding:
-
     def __init__(self, model_name: str = "bert-base-uncased") -> None:
         super().__init__()
+
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.model = BertModel.from_pretrained(model_name)
 
