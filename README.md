@@ -8,6 +8,15 @@ Current pipeline to conduct the task is:
 - investigate the data format of source table column and create a function (using LLM) to transform the data to the format of template table column
 - apply the function to the source table column (using LLM, not the real code execution) 
 
+```mermaid
+flowchart TD
+    Z(Get subsample of data)
+    Z --> A(Columns alignment\nBERT, locally)
+    A --> B(Assign column category\nLLM)
+    B --> C(Create mapping functions\nLLM)
+    C -->D(Apply mapping functions\nLLM)
+```
+
 ## Usage
 Install dependencies (pip is used for simplicity)
 ```shell
