@@ -1,4 +1,4 @@
-# llmTableSchemaMapping
+# LLM-based Table Schema Mapping
 
 Table Schema mapping and data transformation using LLM
 
