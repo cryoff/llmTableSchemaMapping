@@ -47,8 +47,9 @@ python3 convert_table.py --source <source CSV> --template <template CSV> --targe
 - code "execution" is very naive and error-prone
 - agents that force the LLM to produce a reasonable code in a while-true fashion are not implemented
 
-### Corner cases and possible problems
+### Problems, Corner cases and possible problems
 
+- "code execution" shall be done using `PythonREPLTool` from `langchain` - it is has much more comfortable interface to use
 - performance may heavily depend on the amount of sampled data 
 - embedding-based alignment is using a subsample of the data (50 rows currently).
     We can be just unlucky to select a non-representative subsample and get a bad alignment.
